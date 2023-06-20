@@ -24,6 +24,7 @@ public class Utils {
         fecha = fecha.replace("-","/");
         int i= fecha.indexOf("/");
         dia = fecha.substring(0,fecha.indexOf("/"));
+        dia = (dia.length()==1)?"0"+dia:dia;
         mes = fecha.substring(fecha.indexOf("/")+1,fecha.lastIndexOf("/"));
         mes = getMes(mes);
         año = fecha.substring(fecha.lastIndexOf("/")+1);

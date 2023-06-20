@@ -62,6 +62,7 @@ public class ClienteServiceImpl implements ClienteService {
                 response.add(clienteResponseDTO);
 
             }
+            Collections.sort(response,Collections.reverseOrder());
         }
         return response;
 

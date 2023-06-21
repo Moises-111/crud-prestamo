@@ -1,17 +1,15 @@
 package com.example.ejemplos.dto;
 
-import com.example.ejemplos.entities.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ClienteResponseDTO  implements Comparable<ClienteResponseDTO>{
+public class PrestamosResponseDTO implements Comparable<PrestamosResponseDTO>{
     //	Cliente, Plazo, Tasa_Interés, Monto, Interés, IVA, Pago
     private String cliente;
     private Short plazo;
@@ -22,7 +20,7 @@ public class ClienteResponseDTO  implements Comparable<ClienteResponseDTO>{
     private BigDecimal pago;
 
     @Override
-    public int compareTo(ClienteResponseDTO o) {
+    public int compareTo(PrestamosResponseDTO o) {
         return this.plazo.compareTo(o.getPlazo());
     }
 }

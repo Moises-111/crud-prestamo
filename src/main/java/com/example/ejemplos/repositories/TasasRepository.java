@@ -1,13 +1,9 @@
 package com.example.ejemplos.repositories;
 
-
-
 import com.example.ejemplos.entities.Tasas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.math.BigDecimal;
 
 @Repository
 public interface TasasRepository extends JpaRepository<Tasas, Short> {

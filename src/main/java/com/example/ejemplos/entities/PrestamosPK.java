@@ -1,6 +1,5 @@
 package com.example.ejemplos.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode
-public class ClientePK implements Serializable {
+public class PrestamosPK implements Serializable {
     private String cliente;
     private short id;
 

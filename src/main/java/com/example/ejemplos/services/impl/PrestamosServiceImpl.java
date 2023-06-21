@@ -1,45 +1,41 @@
 package com.example.ejemplos.services.impl;
 
 import static  com.example.ejemplos.Util.Utils.*;
-import com.example.ejemplos.dto.ClienteResponseDTO;
-import com.example.ejemplos.entities.Cliente;
+import com.example.ejemplos.dto.PrestamosResponseDTO;
+import com.example.ejemplos.entities.Prestamos;
 import com.example.ejemplos.entities.Tasas;
-import com.example.ejemplos.repositories.ClienteRepository;
+import com.example.ejemplos.repositories.PrestamosRepository;
 import com.example.ejemplos.repositories.TasasRepository;
-import com.example.ejemplos.services.ClienteService;
+import com.example.ejemplos.services.PrestamosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @Service
-public class ClienteServiceImpl implements ClienteService {
+public class PrestamosServiceImpl implements PrestamosService {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private PrestamosRepository clienteRepository;
 
     @Autowired
     private TasasRepository tasasRepository;
 
     @Override
-    public List<ClienteResponseDTO> calcularMontoAPagar(String fecha_actual, String cliente, BigDecimal tasa_interes,
-                                                        short dias_año_comercial) throws ParseException {
-        List<ClienteResponseDTO> response = new ArrayList<>();
-        Optional<List<Cliente>> pendientes = clienteRepository.findAllByCliente(cliente);
+    public List<PrestamosResponseDTO> calcularMontoAPagar(String fecha_actual, String cliente, BigDecimal tasa_interes,
+                                                          short dias_año_comercial) throws ParseException {
+        List<PrestamosResponseDTO> response = new ArrayList<>();
+        Optional<List<Prestamos>> pendientes = clienteRepository.findAllByCliente(cliente);
 
         if(pendientes.isPresent()){
             for(int i = 0; i<pendientes.get().size();i++){
-                ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
+                PrestamosResponseDTO prestamosResponseDTO = new PrestamosResponseDTO();
 
                 int plazo = getDiasDiferencia(fecha_actual,pendientes.get().get(i).getFecha());
-                clienteResponseDTO.setPlazo((short) plazo);
+                prestamosResponseDTO.setPlazo((short) plazo);
                 Tasas taza = tasasRepository.obtenerTasaInteres((short) plazo);
 
                 Double tazaEntreDiasAnosComercial = taza.getTasa_interes().doubleValue()/dias_año_comercial;
@@ -51,15 +47,15 @@ public class ClienteServiceImpl implements ClienteService {
 
                 BigDecimal pago = pendientes.get().get(i).getMonto().add(interes).add(iva);
 
-                clienteResponseDTO.setCliente(String.valueOf(pendientes.get().get(i).getCliente()));
-                clienteResponseDTO.setMonto(pendientes.get().get(i).getMonto());
-                clienteResponseDTO.setInteres(interes);
-                clienteResponseDTO.setIva(iva);
-                clienteResponseDTO.setPago(pago);
-                clienteResponseDTO.setPlazo((short) plazo);
-                clienteResponseDTO.setTasa_interes(taza.getTasa_interes());
+                prestamosResponseDTO.setCliente(String.valueOf(pendientes.get().get(i).getCliente()));
+                prestamosResponseDTO.setMonto(pendientes.get().get(i).getMonto());
+                prestamosResponseDTO.setInteres(interes);
+                prestamosResponseDTO.setIva(iva);
+                prestamosResponseDTO.setPago(pago);
+                prestamosResponseDTO.setPlazo((short) plazo);
+                prestamosResponseDTO.setTasa_interes(taza.getTasa_interes());
 
-                response.add(clienteResponseDTO);
+                response.add(prestamosResponseDTO);
 
             }
             Collections.sort(response,Collections.reverseOrder());

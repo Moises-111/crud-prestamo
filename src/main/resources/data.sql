@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS PRESTAMOS
     fecha character varying(25) NOT NULL,
     monto numeric(10,2) NOT NULL,
     estado character varying(25) NOT NULL,
-    CONSTRAINT cliente_pkey PRIMARY KEY (num_cliente,id)
+    CONSTRAINT prestamo_pkey PRIMARY KEY (num_cliente,id)
 );
 
 CREATE TABLE IF NOT EXISTS CLIENTES
